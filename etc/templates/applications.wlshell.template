@@ -1,0 +1,19 @@
+connect ${protocol}://${host}:${port} ${username} ${password}
+output_file = "${datadir}${separator}${id}.applications"
+
+echo "" > \$output_file
+cd /Application
+dir
+apps = \$LAST
+for \$app in \$apps
+	echo "APPLICATION" >> \$output_file
+	echo \$app >> \$output_file
+	cd /Application/\$app
+	dir
+	props = \$LAST
+	for \$prop in \$props
+		echo \$prop "|=|" get \$prop >> \$output_file
+	end
+end
+
+exit

@@ -1,0 +1,18 @@
+connect ${protocol}://${host}:${port} ${username} ${password}
+output_file = "${datadir}${separator}wls_all${id}"
+
+echo "" > \$output_file
+cd /all
+dir
+mbeans = \$LAST
+for \$mbean in \$mbeans
+	echo "MBEAN:" \$mbean >> \$output_file
+	cd /all/\$mbean
+	dir
+	props = \$LAST
+	for \$prop in \$props
+		echo \$prop "|=|" get \$prop >> \$output_file
+	end
+end
+
+exit

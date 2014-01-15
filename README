@@ -1,0 +1,71 @@
+Licensing: 
+
+     Copyright 2009 Middleware Connections, a division of Cloudware Connections Inc.
+  
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+  
+         http://www.apache.org/licenses/LICENSE-2.0
+  
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+
+
+
+
+
+This tool is used as a starting point for estimating the effort required to migrate a group of J2EE applications
+from an Oracle/BEA WebLogic environment to a JBOSS AS environment.
+
+The tool produces reports, in HTML format, on the following information:
+1) Class Dependencies:
+	- for each codebase defined in the configuration, reports on the libraries that the codebase depends on (down to the package, class, and method levels)
+	- for each dependency, and for each classpath location defined in the configuration, the tool attempts to load those classes and reports on where those class
+	files are located and the Manifest information associated with those jar files.
+	- a typical use case for the class dependencies tool is to set up 2 classpath configurations: 1) the WebLogic runtime classspath that the application is currently running against; 2)the target JBoss classpath that the application will be migrated to.  From this setup, the tool gives an overview of what libraries will be missing in the target JBoss environment, and also what standard libraries in JBoss that may potentially conflict with standard libraries from WebLogic
+
+2) WebLogic Server Configuration:
+	- for each of the servers defined in the configuration, gives a complete and searchable listing of all the MBeans currently deployed
+	- the tools queries the server live to obtain this information, so the server must be running and accessible
+	
+3) Applications deployment configuration
+	- for each application defined in the configuration, gives an overview of the numbers of specific resources are present (eg. JSP's, HTML files, Servlets, and EJB's), as well as a pointer to the application descriptors for further inspection.
+	
+From here on, we refer to the base directory for this installation as $DIST.
+
+===========================================================================================
+Configuration:
+===========================================================================================
+1) Set JAVA_HOME to a JRE of 1.5 or later.  The dependency analysis tools require this.
+
+2) Set WL_HOME to your WebLogic server home, for example /opt/bea81/weblogic81
+
+3) Run the script named downloadWLShell.sh if you are using the tool with WebLogic version < 9.0
+
+The tool uses WLST to examine the application run time environment. WLST became officially available as of WebLogic release 9.0. If you are using a version of WebLogic prior to 9.x (such as 8.1 and earlier) uncomment the following line before running the script: 
+
+This will download the WLShell tool and install it into the tools directory. The tool will then use WLShell to do the run time analysis.
+
+4) Go to $DIST/conf
+Edit the config.xml file, setting up your server configuration and applications' codebase.  The sample config.xml provides more details and examples of a typical configuration.
+By default, the tool runs with the configuration defined in this file.  You can run it against other configurations by editing your $DIST/bin/run.sh (or $DIST/bin/run.cmd on Windows) and editing the following line in 2 places:
+CONFIG_XML=$CONFDIR/config.xml.
+
+That is all that is necessary.  Also in the conf directory you will find stylesheets, javascript files, and other resources required
+by the tool to run and generate its report.  It is not necessary to edit these files.
+
+===========================================================================================
+Running the tool:
+===========================================================================================
+After setting up your configuration, go to $DIST/bin
+Execute run.sh (*NIX Operating systems)
+
+===========================================================================================
+Output
+===========================================================================================
+Reports will be generated in the $DIST/reports/ folder.
+Open $DIST/reports/index.html in a browser to view the reports.

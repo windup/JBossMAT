@@ -1,0 +1,66 @@
+body {
+	width: 1200px;
+	margin: auto;
+	font: 10pt verdana, arial, helvetica;
+}
+
+.header {
+	width: 100%;
+	height: 50px;
+	background-color: white;
+	border-bottom: 1px solid silver;
+	padding-bottom: 5px;
+}
+
+.header_left {
+	float: left;
+}
+
+.header_right {
+	line-height: 50px;
+	text-align: center;
+	font-weight: bold;
+}
+
+.wrapper {
+	
+}
+
+.mbean_header {
+	clear:both;
+	font-weight: bold;
+	font-size:15px;
+}
+
+.mbean_data_wrapper {
+}
+
+.mbean_data {
+	clear:both;
+	font-size: 14px;
+}
+
+.mbean_key {
+	float:left;
+	padding-left: 20px;
+	width: 300px;
+	color: black;
+}
+
+.mbean_value {
+	float: left;
+	padding-left: 10px;
+	color: blue;
+	text-decoration: italic;
+}
+
+.dep_header {
+	text-align:left;
+	font-weight: bold;
+	vertical-align: top;
+}
+
+.dep_data {
+	text-align:left;
+	vertical-align: top;
+}

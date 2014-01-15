@@ -1,0 +1,1 @@
+"%JAVA_HOME%\bin\java" %DEPENDENCYFINDER_OPTS% -classpath "%DEPENDENCYFINDER_HOME%\classes;%DEPENDENCYFINDER_HOME%\lib\DependencyFinder.jar;%DEPENDENCYFINDER_HOME%\lib\log4j.jar;%DEPENDENCYFINDER_HOME%\lib\jakarta-oro.jar;%CLASSPATH%" com.jeantessier.dependencyfinder.cli.DependencyExtractor %*

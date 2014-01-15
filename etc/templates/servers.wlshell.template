@@ -1,0 +1,19 @@
+connect ${protocol}://${host}:${port} ${username} ${password}
+output_file = "${datadir}${separator}${id}.servers"
+
+echo "" > \$output_file
+cd /Server
+dir
+servers = \$LAST
+for \$server in \$servers
+	echo "SERVER" >> \$output_file
+	echo \$server >> \$output_file
+	cd /Server/\$server
+	dir
+	props = \$LAST
+	for \$prop in \$props
+		echo \$prop "|=|" get \$prop >> \$output_file
+	end
+end
+
+exit

@@ -1,0 +1,32 @@
+<?xml version="1.0" ?>
+<project name="RedHat WebLogic to JBoss Conversion Estimation Tool" default="main" basedir="..">
+
+	<property environment="env"/>
+	<property file="build/build.properties"/>
+	
+	
+	<property name="dist" value="build/dist"/>
+	<property name="compilePath" value="build/dist/classes"/>
+	<property name="output" value="build/dist/mat.jar"/>
+
+	
+	<path id="cp">
+		<fileset dir="lib" includes="*.jar"/>
+		<fileset dir="tools/depfinder/lib" includes="Dep*.jar"/>
+	</path>
+
+	<taskdef name="groovyc" classname="org.codehaus.groovy.ant.Groovyc" classpathref="cp"/>
+	
+	<target name="compile-scripts">
+		<delete dir="${dist}" quiet="true"/>
+		<mkdir dir="${dist}"/>
+		<mkdir dir="${compilePath}"/>
+		
+		<groovyc srcdir="src" destdir="./${compilePath}" classpathref="cp"/>
+		<jar destfile="${output}" basedir="${compilePath}"/>
+	</target>
+		
+	<target name="main" depends="compile-scripts">
+	</target>
+	
+</project>

@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+<!--
+	This is a sample configuration.
+	Edit with your settings.
+-->
+<config>
+	
+	<options>
+		<run-dependency-analysis>true</run-dependency-analysis>
+		<run-server-analysis>true</run-server-analysis>
+	</options>
+	
+	<servers>
+		<!-- 
+			define your server parameters here 
+			For each server defined here, the tool will query the running server to obtain information about all its deployed mbeans
+			You should have WL_HOME set appropriately for each 
+		-->		
+		<server id="weblogic10.3">
+			<protocol>t3</protocol>
+			<host>localhost</host>
+			<port>7011</port>
+			<!--admin/password-->
+			<username>weblogic</username>
+			<password>weblogic</password>
+			<weblogic-version>10.3</weblogic-version>
+			
+			<!-- 
+				define the mbeans you are specifically interested in gathering information on 
+				There will always be a report on All mbeans, this is to have specifics on certain ones
+			-->
+			<mbeans>
+				<!--
+				<mbean type="Domain" label="Domains"/>
+				<mbean type="Server" label="Servers"/>
+				<mbean type="Cluster" label="Clusters"/>
+				<mbean type="JDBCConnectionPool" label="JDBC Connection Pools" />
+				<mbean type="StartupClassConfig" label="Startup Classes" />
+				<mbean type="ShutdownClassConfig" label="Shutdown Classes" />
+				-->
+				<mbean type="Domain" label="Domains"/>
+				<mbean type="AppDeployment" label="Applications"/>
+				<mbean type="Server" label="Servers"/>
+				<mbean type="EJBComponent" label="EJB Components" />
+				<mbean type="WebAppComponent" label="Web App Components" />
+			</mbeans>
+		</server>
+	</servers>
+	
+	<applications>
+
+		<!--
+			define your applications here
+			For each application, the tool will inspect the codebase and report on its outgoing dependencies
+			For each application, the tool will inspect the basedir and report on the applications contained within, based on the deployment descriptors it finds
+			For each classpath defined, the tool will attempt to load the dependent classes from the set of locations and report on the location (if found) and manifest information
+			of each class
+			
+			This is an example of an app with several applications (EJB and Web) within
+		-->
+		<application id="MedRec">
+			<codebase>${WL_HOME}/samples/server/medrec/dist</codebase>
+
+			<!-- 
+				define your classpaths here
+				For each classpath, the tool will attempt to load the dependent classes from the set of locations and report on the location (if found) and manifest information
+				For each directory, all *.jar files + the directory itself will be used by the tool's class loader
+				The classpath will be formed by recursing through all subdirectories of the directory, unless the attribute recurse='false' is set
+			-->
+			<classpath id="weblogic8.1.classpath">
+				<directory path="${WL_HOME}/samples/server/medrec/dist/medrecEar"/>
+				<directory path="${WL_HOME}/server/ext"/>
+				<directory path="${WL_HOME}/server/lib"/>
+			</classpath>
+		
+			<classpath id="jboss.classpath">
+				<directory path="${WL_HOME}/samples/server/medrec/dist/medrecEar"/>
+				<directory path="${JBOSS_HOME}/server/default/lib"/>
+				<directory path="${JBOSS_HOME}/server/default/lib/ext"/>
+				<directory path="${JBOSS_HOME}/lib"/>
+			</classpath>
+			
+		</application>
+
+
+
+	</applications>
+	
+</config>
